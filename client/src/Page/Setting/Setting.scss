@@ -1,0 +1,89 @@
+.setting {
+	display: flex;
+	&Wrapper {
+		flex: 9;
+		padding: 20px;
+	}
+	&Title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		&Update {
+			font-size: 30px;
+			margin-bottom: 20px;
+			color: lightcoral;
+		}
+		&Delete {
+			color: red;
+			font-size: 12px;
+			cursor: pointer;
+		}
+	}
+	&Form {
+		display: flex;
+		flex-direction: column;
+	}
+	&PP {
+		display: flex;
+		align-items: center;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		& > img {
+			height: 70px;
+			width: 70px;
+			border-radius: 20px;
+			object-fit: cover;
+		}
+		&Icon {
+			width: 25px;
+			height: 25px;
+			padding: 5px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: none;
+			border-radius: 50%;
+			margin-left: 10px;
+			color: white;
+			background-color: lightcoral;
+			cursor: pointer;
+		}
+		&:focus {
+			outline-style: none;
+		}
+		&Input {
+			width: 30%;
+		}
+	}
+	&Form {
+		& > label {
+			font-size: 20px;
+			margin-top: 20px;
+		}
+		& > input {
+			color: gray;
+			margin-bottom: 10px;
+			margin-bottom: 10px;
+			height: 30px;
+			border: none;
+			border-bottom: 1px solid lightgray;
+		}
+	}
+	&SubmitButton {
+		align-self: center;
+		width: 150px;
+		border: none;
+		border-radius: 10px;
+		color: white;
+		background-color: teal;
+		padding: 10px;
+		margin-top: 20px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&:hover {
+			background-color: rgb(1, 114, 114);
+		}
+	}
+}
