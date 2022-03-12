@@ -1,9 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import './Write.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { actCreate } from '../../Redux/Actions/postAction';
 
 const Write = () => {
 	const [formData, setFormData] = useState({
@@ -16,8 +14,7 @@ const Write = () => {
 	const { title, desc, img, tags, categories } = formData;
 	const token = useSelector(state => state.token);
 	const name = useSelector(state => state.auth.user.name);
-	const history = useHistory();
-	const dispatch = useDispatch();
+	const cat = useSelector(state => state.category);
 
 	const uploadImage = async e => {
 		const file = e.target.files[0];
@@ -39,7 +36,7 @@ const Write = () => {
 	const handleOnclickPublish = async e => {
 		e.preventDefault();
 		try {
-			const res = await axios.post(
+			await axios.post(
 				'http://localhost:5000/post',
 				{
 					title,
@@ -51,8 +48,7 @@ const Write = () => {
 				},
 				{ headers: { Authorization: token } }
 			);
-			dispatch(actCreate(res));
-			history.push('/');
+			window.location.href = '/';
 		} catch (error) {
 			console.log(error.response);
 		}
@@ -98,6 +94,20 @@ const Write = () => {
 						}
 					/>
 				</div>
+				<select
+					className="writeFormGroup writeSelect"
+					defaultValue={'Categories'}
+					onChange={e =>
+						setFormData({ ...formData, categories: e.target.value })
+					}
+				>
+					<option value="Categories" disabled>
+						Categories
+					</option>
+					{cat?.map((item, index) => (
+						<option key={index}>{item.name}</option>
+					))}
+				</select>
 				<div className="writeFormGroup">
 					<textarea
 						name=""

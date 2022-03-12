@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Sidebar.scss';
 
 const Sidebar = () => {
+	const categories = useSelector(state => state.category);
 	return (
 		<div className="sidebar">
 			<div className="sidebarItem">
@@ -19,36 +21,13 @@ const Sidebar = () => {
 			<div className="sidebarItem">
 				<span className="sidebarTitle">CATEGORIES</span>
 				<ul className="sidebarList">
-					<li className="sidebarListItem">
-						<Link className="sidebarLink" to="#">
-							Life
-						</Link>
-					</li>
-					<li className="sidebarListItem">
-						<Link className="sidebarLink" to="#">
-							Music
-						</Link>
-					</li>
-					<li className="sidebarListItem">
-						<Link className="sidebarLink" to="#">
-							Sport
-						</Link>
-					</li>
-					<li className="sidebarListItem">
-						<Link className="sidebarLink" to="#">
-							Style
-						</Link>
-					</li>
-					<li className="sidebarListItem">
-						<Link className="sidebarLink" to="#">
-							Tech
-						</Link>
-					</li>
-					<li className="sidebarListItem">
-						<Link className="sidebarLink" to="#">
-							Cinema
-						</Link>
-					</li>
+					{categories?.map((item, index) => (
+						<li className="sidebarListItem" key={index}>
+							<Link className="sidebarLink" to={`/search?cat=${item.name}`}>
+								{item.name}
+							</Link>
+						</li>
+					))}
 				</ul>
 			</div>
 			<div className="sidebarItem">

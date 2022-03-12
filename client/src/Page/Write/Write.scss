@@ -60,4 +60,11 @@
 		display: flex;
 		align-items: center;
 	}
+	&Select {
+		width: 10%;
+		height: 30px;
+		&:focus {
+			outline: none;
+		}
+	}
 }

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import './Login.scss';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { actLogin } from '../../Redux/Actions/authAction';
+import './Login.scss';
 
 const Login = () => {
 	const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ const Login = () => {
 		err: '',
 		success: ''
 	});
-	const { email, password, err, success } = formData;
+	const { email, password } = formData;
 	const dispatch = useDispatch();
 	const history = useHistory();
 

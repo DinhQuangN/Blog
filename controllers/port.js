@@ -41,4 +41,32 @@ const deletePort = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
-module.exports = { getPort, createPort, updatePort, deletePort };
+const getProfile = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const post = await PortMessage.findById(id);
+		res.status(200).json(post);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+const getCategories = async (req, res) => {
+	const { cat } = req.query;
+	try {
+		const categories = new RegExp(cat, 'i');
+		const category = await PortMessage.find({
+			categories
+		});
+		res.status(200).json(category);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+module.exports = {
+	getPort,
+	createPort,
+	updatePort,
+	deletePort,
+	getCategories,
+	getProfile
+};

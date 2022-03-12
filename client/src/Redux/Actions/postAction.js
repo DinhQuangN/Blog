@@ -1,4 +1,4 @@
-import { CREATE, FETCH_ALL } from '../Constants/ActionTypes';
+import { FETCH_ALL, PROFILE } from '../Constants/ActionTypes';
 
 export const actFetch = data => {
 	return {
@@ -6,9 +6,9 @@ export const actFetch = data => {
 		payload: data
 	};
 };
-export const actCreate = data => {
+export const actProfile = data => {
 	return {
-		type: CREATE,
+		type: PROFILE,
 		payload: data
 	};
 };

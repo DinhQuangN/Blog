@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const PostRouter = require('./router/port');
 const UserRouter = require('./router/user');
+const CategoriesRouter = require('./router/categories');
 
 const app = express();
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 app.use('/post', PostRouter);
 app.use('/user', UserRouter);
+app.use('/categories', CategoriesRouter);
 
 mongoose
 	.connect(process.env.MONGO_URL, {

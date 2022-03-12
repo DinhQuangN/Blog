@@ -23,7 +23,7 @@ const PortSchema = mongoose.Schema(
 			require: true
 		},
 		categories: {
-			type: Array,
+			type: String,
 			require: true
 		},
 		tags: {

@@ -12,15 +12,7 @@ const Register = () => {
 		err: '',
 		success: ''
 	});
-	const {
-		email,
-		password,
-		firstName,
-		lastName,
-		confirmPassword,
-		err,
-		success
-	} = formData;
+	const { email, password, firstName, lastName, confirmPassword } = formData;
 	const handleOnclickRegister = async e => {
 		e.preventDefault();
 		try {
