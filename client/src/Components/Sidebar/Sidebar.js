@@ -1,10 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.scss';
 
 const Sidebar = () => {
-	const categories = useSelector(state => state.category);
+	const [categories, setCategories] = useState([]);
+	useEffect(() => {
+		const getCat = async () => {
+			const res = await axios.get('http://localhost:5000/categories');
+			setCategories(res.data);
+		};
+		getCat();
+	}, []);
 	return (
 		<div className="sidebar">
 			<div className="sidebarItem">

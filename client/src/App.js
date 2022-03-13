@@ -11,8 +11,6 @@ import Register from './Page/Register/Register';
 import Setting from './Page/Setting/Setting';
 import Write from './Page/Write/Write';
 import { actFetchUser, actGetUser, actLogin } from './Redux/Actions/authAction';
-import { actGetCategories } from './Redux/Actions/categories';
-import { actFetch } from './Redux/Actions/postAction';
 import { GET_TOKEN } from './Redux/Constants/ActionTypes';
 axios.defaults.withCredentials = true;
 
@@ -48,41 +46,18 @@ const App = () => {
 			getUser();
 		}
 	}, [token, dispatch]);
-	useEffect(() => {
-		const getFetch = async () => {
-			try {
-				const res = await axios.get('http://localhost:5000/post');
-				dispatch(actFetch(res.data));
-			} catch (error) {
-				console.log(error.response);
-			}
-		};
-		getFetch();
-	}, [dispatch]);
 
-	useEffect(() => {
-		const getCategories = async () => {
-			try {
-				const res = await axios.get('http://localhost:5000/categories');
-				dispatch(actGetCategories(res.data));
-			} catch (error) {
-				console.log(error.response);
-			}
-		};
-		getCategories();
-	}, [dispatch]);
 	return (
 		<Router>
 			<Topbar />
 			<Switch>
 				<Route path="/" exact component={Homepage} />
-				<Route path="/posts" component={Homepage} />
+				<Route path="/post/:id" component={SinglePost} />
 				<Route path="/search" component={Homepage} />
 				<Route path="/register" component={Register} />
 				<Route path="/login" component={Login} />
 				<Route path="/write" component={auth.isLogged ? Write : Login} />
 				<Route path="/setting" component={Setting} />
-				<Route path="/profile/:title" component={SinglePost} />
 				<Route path="/user/activate/:activation" component={ActivateEmail} />
 			</Switch>
 		</Router>

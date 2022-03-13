@@ -1,22 +1,10 @@
-import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { actProfile } from '../../Redux/Actions/postAction';
 import './Post.scss';
 
 const Post = ({ item }) => {
-	const dispatch = useDispatch();
-	const handleProfile = async () => {
-		try {
-			const res = await axios.get('http://localhost:5000/post/' + item._id);
-			dispatch(actProfile(res.data));
-			console.log(res);
-		} catch (error) {
-			console.log(error.response);
-		}
-	};
+	const handleProfile = () => {};
 	return (
 		<div className="post">
 			<img src={item.img} alt="" className="postImg" />
@@ -31,7 +19,7 @@ const Post = ({ item }) => {
 					))}
 				</div>
 				<span className="postTitle" onClick={handleProfile}>
-					<Link to={`profile/${item._id}`} className="postLink">
+					<Link to={`post/${item._id}`} className="postLink">
 						{item.title}
 					</Link>
 				</span>
