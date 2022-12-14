@@ -1,10 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import mongoose from 'mongoose';
 import morgan from 'morgan';
 import routes from './routers';
 
