@@ -28,7 +28,7 @@ const Post: React.FC = () => {
 			<p className="font-varela font-normal text-[14px] leading-6 text-[#444] mt-[15px] overflow-hidden webkit-box">
 				mo ta
 			</p>
-		</div>
+		</div> 
 	);
 };
 
