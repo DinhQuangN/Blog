@@ -25,3 +25,11 @@ export interface IDecodedToken extends INewUser {
 export interface IReqAuth extends Request {
 	user?: IUser;
 }
+export interface IBlog {
+	user: IUser;
+	title: string;
+	image: string;
+	tags: string[];
+	describe: string;
+	category: ICategory;
+}

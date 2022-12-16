@@ -7,6 +7,8 @@ import {
 	generateRefreshToken
 } from '../config/generateToken';
 import { IDecodedToken, IReqAuth, IUser } from '../config/interface';
+import sendEmail from '../config/sendMail';
+import { validateEmail } from '../middleware/valid';
 import userModel from '../models/userModel';
 
 const { ACTIVE, ACCESS, REFRESH } = process.env;
@@ -26,6 +28,13 @@ export const Register = async (req: Request, res: Response) => {
 			password: passwordHash
 		};
 		const active_token = generateActiveToken(newUser);
+		const url = `${CLIENT_URL}/active/${active_token}`;
+		if (validateEmail(account)) {
+			sendEmail(account, url, 'Verify your email address');
+			return res
+				.status(200)
+				.json({ message: 'Success! Please check your email' });
+		}
 		res.status(200).json({ message: 'Register success' });
 	} catch (error: any) {
 		res.status(500).json({ message: error.message });
@@ -54,7 +63,7 @@ export const activeAccount = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
 	try {
 		const { account, password } = req.body;
-		const user = await userModel.findOne({ account });
+		const user = await userModel.findOne({ account: account });
 		if (!user) {
 			return res.status(400).json({ message: "This account doesn't exists" });
 		}
@@ -68,7 +77,7 @@ export const logout = async (req: IReqAuth, res: Response) => {
 		if (!req.user) {
 			return res.status(400).json({ message: 'Invalid Authentication' });
 		}
-		res.clearCookie('rf_token', { path: 'api/refresh_token' });
+		res.clearCookie('rf_token', { path: '/api/refreshToken' });
 		await userModel.findByIdAndUpdate({ _id: req.user.id }, { rf_token: '' });
 	} catch (error: any) {
 		res.status(500).json({ message: error.message });
@@ -78,11 +87,11 @@ export const refreshToken = async (req: Request, res: Response) => {
 	try {
 		const rf_token = req.cookies.rf_token;
 		if (!rf_token) {
-			return res.status(400).json({ message: 'Please login now!' });
+			return res.status(400).json({ message: 'Please login now1!' });
 		}
 		const decode = jwt.verify(rf_token, `${REFRESH}`) as IDecodedToken;
 		if (!decode.id) {
-			return res.status(400).json({ message: 'Please login now!' });
+			return res.status(400).json({ message: 'Please login now2!' });
 		}
 		const user = await userModel
 			.findById(decode.id)
@@ -91,7 +100,7 @@ export const refreshToken = async (req: Request, res: Response) => {
 			return res.status(400).json({ message: "This account doesn't exists!" });
 		}
 		if (rf_token !== user.rf_token) {
-			return res.status(400).json({ message: 'Please login now!' });
+			return res.status(400).json({ message: 'Please login now3!' });
 		}
 		const access_token = generateAccessToken({ id: user.id });
 		const refresh_token = generateRefreshToken({ id: user.id }, res);
@@ -110,8 +119,11 @@ const loginUser = async (user: IUser, password: string, res: Response) => {
 		return res.status(400).json({ message: 'Password is incorrect' });
 	}
 	const access_token = generateAccessToken({ id: user.id });
-	const rf_token = generateRefreshToken({ id: user.id }, res);
-	await userModel.findOneAndUpdate({ _id: user.id }, { rf_token });
+	const refresh_token = generateRefreshToken({ id: user.id }, res);
+	await userModel.findOneAndUpdate(
+		{ _id: user.id },
+		{ rf_token: refresh_token }
+	);
 	res.status(200).json({
 		message: 'Login success',
 		access_token,

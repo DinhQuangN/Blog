@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
 		},
 		rf_token: {
 			type: String,
-			select: false
+			default: ''
 		}
 	},
 	{
