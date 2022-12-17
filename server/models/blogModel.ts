@@ -5,7 +5,11 @@ const blogSchema = new mongoose.Schema(
 	{
 		user: {
 			type: mongoose.Types.ObjectId,
-			require
+			ref: 'user'
+		},
+		image: {
+			type: String,
+			require: true
 		},
 		title: {
 			type: String,
@@ -17,7 +21,7 @@ const blogSchema = new mongoose.Schema(
 		},
 		category: {
 			type: mongoose.Types.ObjectId,
-			require: true
+			ref: 'category'
 		},
 		describe: {
 			type: String,

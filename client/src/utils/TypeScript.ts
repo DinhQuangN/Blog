@@ -16,8 +16,8 @@ export interface IUser {
 	name: string;
 	avatar: string;
 	role?: string;
-	createdAt?: string;
-	updatedAt?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
 }
 export interface IAccessToken {
 	id?: string;
@@ -26,6 +26,23 @@ export interface IAccessToken {
 export interface ICategory {
 	_id?: string;
 	name: string;
-	createdAt?: string;
-	updatedAt?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
+}
+export interface IBlog {
+	_id?: string;
+	image: string;
+	title: string;
+	tags: string[];
+	category: string | ICategory;
+	user?: string | IUser;
+	describe: string;
+	createdAt?: Date;
+	updatedAt?: Date;
+}
+export interface IHomeBlogs {
+	_id?: string;
+	name: string;
+	count: number;
+	blogs: IBlog[];
 }
