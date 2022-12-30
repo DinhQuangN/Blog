@@ -4,7 +4,11 @@ import homeBlogs from './Blogs/HomeBlogSlice';
 import categorySlice from './Category/categorySlice';
 
 const store = configureStore({
-	reducer: { auth: authSlice, category: categorySlice, homeBlogs },
+	reducer: {
+		auth: authSlice,
+		category: categorySlice,
+		homeBlogs
+	},
 	devTools: true
 });
 

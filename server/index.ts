@@ -6,9 +6,8 @@ import express from 'express';
 import { createServer } from 'http';
 import morgan from 'morgan';
 import { Server, Socket } from 'socket.io';
-import { SocketServer } from './config/socket';
 import routes from './routers';
-
+import { SocketServer } from './config/socket';
 
 const app = express();
 app.use(express.json());
@@ -18,7 +17,12 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 
 const http = createServer(app);
-export const io = new Server(http);
+export const io = new Server(http, {
+	cors: {
+		origin: 'http://localhost:3000',
+		methods: ['GET', 'POST']
+	}
+});
 
 io.on('connection', (socket: Socket) => {
 	SocketServer(socket);
@@ -28,7 +32,8 @@ app.use('/api', routes);
 
 import './config/database';
 
+
 const PORT = Number(process.env.PORT) || 8000;
-app.listen(PORT, () => {
+http.listen(PORT, () => {
 	console.log(`Server is running ${PORT}`);
 });
