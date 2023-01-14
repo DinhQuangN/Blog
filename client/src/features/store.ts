@@ -9,7 +9,7 @@ const store = configureStore({
 		category: categorySlice,
 		homeBlogs
 	},
-	devTools: true
+	devTools: false
 });
 
 export type RootState = ReturnType<typeof store.getState>;

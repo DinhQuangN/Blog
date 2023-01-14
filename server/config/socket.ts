@@ -8,6 +8,7 @@ export const SocketServer = (socket: Socket) => {
 
 	socket.on('leaveRoom', (id: string) => {
 		socket.leave(id);
+		console.log({ outRoom: (socket as any).adapter.rooms });
 	});
 	socket.on('disconnect', () => {
 		console.log(socket.id + ' disconnect');

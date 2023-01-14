@@ -9,7 +9,7 @@ interface IProps {
 	socket: Socket;
 }
 
-const Detail: React.FC = () => {
+const Detail: React.FC<IProps> = ({ socket }) => {
 	const [blog, setBlog] = React.useState<IBlog>();
 	const { state } = useLocation();
 
@@ -18,15 +18,14 @@ const Detail: React.FC = () => {
 		getAPI(`getBlog/${state.id}`).then(res => setBlog(res.data[0]));
 		return () => setBlog(undefined);
 	}, [state.id]);
-	// console.log(socket);
-	// React.useEffect(() => {
-	// 	if (!state.id || !socket) return;
-	// 	console.log(socket, state.id);
-	// 	socket.emit('joinRoom', state.id);
-	// 	return () => {
-	// 		socket.emit('leaveRoom', state.id);
-	// 	};
-	// }, [state.id, socket]);
+	React.useEffect(() => {
+		if (!state.id || !socket) return;
+		socket.emit('joinRoom', state.id);
+		// return () => {
+		// 	socket.emit('leaveRoom', state.id);
+		// 	socket.close();
+		// };
+	}, [state.id, socket]);
 
 	return <div className="flex">{blog && <DisplayBlog blog={blog} />}</div>;
 };

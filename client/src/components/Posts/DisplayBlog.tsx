@@ -1,14 +1,30 @@
 import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IBlog } from '../../utils/TypeScript';
-import Comments from '../Comment/Comments';
+import { createComment } from '../../features/Comment/commentSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypedSelector';
+import { IBlog, IUser } from '../../utils/TypeScript';
+import Input from '../Comment/Input';
 
 interface IProps {
 	blog: IBlog;
 }
 
 const DisplayBlog: React.FC<IProps> = ({ blog }) => {
+	const { auth } = useAppSelector(state => state);
+	const dispatch = useAppDispatch();
+	const handleComment = (body: string) => {
+		if (!auth.data?.user || !auth.data.access_token) return;
+		const data = {
+			content: body,
+			user: auth.data.user,
+			blog_id: blog._id as string,
+			blog_user_id: (blog.user as IUser)._id,
+			replyCM: [],
+			createdAt: new Date().toISOString()
+		};
+		dispatch(createComment({ data, token: auth.data.access_token }));
+	};
 	return (
 		<div className="flex-[9]">
 			<div className="p-5">
@@ -40,7 +56,13 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
 				/>
 				<br />
 				<hr />
-				<Comments />
+				{auth.data?.user ? (
+					<Input callback={handleComment} />
+				) : (
+					<h5>
+						Please <Link to={`/login?blog/${blog._id}`}>Login</Link>
+					</h5>
+				)}
 			</div>
 		</div>
 	);

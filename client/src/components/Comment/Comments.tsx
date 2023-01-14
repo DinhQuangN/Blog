@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Comments: React.FC = () => {
-	return <div>Comment</div>;
+	return <div></div>;
 };
 
 export default Comments;
